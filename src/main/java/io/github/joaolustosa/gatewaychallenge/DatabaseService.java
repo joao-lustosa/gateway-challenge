@@ -21,7 +21,7 @@ public class DatabaseService {
             DB_USER = properties.getProperty("dbUser");
             DB_PASSWORD = properties.getProperty("dbPassword");
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load configuration properties", e);
+            throw new RuntimeException("Não foi possível carregar as propriedades.", e);
         }
     }
 
@@ -39,10 +39,10 @@ public class DatabaseService {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Insert operation failed.");
+                throw new SQLException("A operação de inserção falhou.");
             }
         } catch (SQLException e) {
-            System.err.println("An error occurred while inserting CEP data: " + e.getMessage());
+            System.err.println("Ocorreu uma falha ao tentar inserir dados do CEP: " + e.getMessage());
 
             throw e;
         }
@@ -72,7 +72,7 @@ public class DatabaseService {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("An error occurred while reading CEP data: " + e.getMessage());
+            System.err.println("Ocorreu um erro ao buscar dados do CEP: " + e.getMessage());
 
             throw e;
         }
@@ -99,7 +99,7 @@ public class DatabaseService {
                 addressList.add(address);
             }
         } catch (SQLException e) {
-            System.err.println("SQL error occurred: " + e.getMessage());
+            System.err.println("Ocorreu um erro de SQL: " + e.getMessage());
 
             throw e;
         }

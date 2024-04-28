@@ -9,10 +9,10 @@ public class Main {
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 System.out.println("Menu:");
-                System.out.println("1. Search for a CEP");
-                System.out.println("2. Get all CEPs");
-                System.out.println("3. Exit");
-                System.out.print("Enter your choice: ");
+                System.out.println("1. Buscar por CEP");
+                System.out.println("2. Exibir endereços salvos");
+                System.out.println("3. Sair");
+                System.out.print("Insira a opção desejada: ");
 
                 String choice = scanner.nextLine();
 
@@ -28,11 +28,11 @@ public class Main {
                     case "3":
                         return;
                     default:
-                        System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+                        System.out.println("Opção inválida. Por favor, escolha 1, 2, ou 3.");
                 }
             }
         } catch (Exception e) {
-            System.err.println("An error occurred: " + e.getMessage());
+            System.err.println("Ocorreu um erro: " + e.getMessage());
         }
     }
 
@@ -40,22 +40,22 @@ public class Main {
         List<Address> addressList = DatabaseService.getAllAddress();
 
         if (addressList.isEmpty()) {
-            System.out.println("No records found in the database.");
+            System.out.println("O banco de dados está vazio.");
         } else {
             for (Address address : addressList) {
                 System.out.println("------------------------------");
                 System.out.println("CEP: " + address.getCep());
-                System.out.println("State: " + address.getState());
-                System.out.println("City: " + address.getCity());
-                System.out.println("Neighborhood: " + address.getNeighborhood());
-                System.out.println("Street: " + address.getStreet());
+                System.out.println("Estado: " + address.getState());
+                System.out.println("Cidade: " + address.getCity());
+                System.out.println("Vizinhança: " + address.getNeighborhood());
+                System.out.println("Rua: " + address.getStreet());
                 System.out.println("------------------------------");
             }
         }
     }
 
     private static void searchForCep(Scanner scanner) throws SQLException {
-        System.out.print("Enter a valid CEP: ");
+        System.out.print("Digite um CEP válido: ");
 
         String cep = scanner.nextLine();
 
@@ -69,12 +69,12 @@ public class Main {
 
         if (addressInfo != null) {
             System.out.println("CEP: " + addressInfo.getCep());
-            System.out.println("State: " + addressInfo.getState());
-            System.out.println("City: " + addressInfo.getCity());
-            System.out.println("Neighborhood: " + addressInfo.getNeighborhood());
-            System.out.println("Street: " + addressInfo.getStreet());
+            System.out.println("Estado: " + addressInfo.getState());
+            System.out.println("Cidade: " + addressInfo.getCity());
+            System.out.println("Vizinhança: " + addressInfo.getNeighborhood());
+            System.out.println("Rua: " + addressInfo.getStreet());
         } else {
-            System.out.println("Failed to retrieve CEP information.");
+            System.out.println("Não foi possível buscar o CEP desejado.");
         }
     }
 }

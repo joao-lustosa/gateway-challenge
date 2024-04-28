@@ -21,7 +21,7 @@ public class AddressService {
 
             BASE_URL = properties.getProperty("brasilApiBaseUrl");
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load configuration properties", e);
+            throw new RuntimeException("Não foi possível carregar as propriedades.", e);
         }
     }
 
@@ -32,7 +32,7 @@ public class AddressService {
 
             return parseResponse(response);
         } catch (IOException | InterruptedException e) {
-            System.err.println("Error fetching CEP data: " + e.getMessage());
+            System.err.println("Erro ao buscar dados do CEP: " + e.getMessage());
 
             return null;
         }
@@ -50,7 +50,7 @@ public class AddressService {
         if (response.statusCode() == 200) {
             return new Gson().fromJson(response.body(), Address.class);
         } else {
-            throw new IOException("Failed to fetch CEP. Status code: " + response.statusCode());
+            throw new IOException("Não foi possível buscar o CEP. Código do erro: " + response.statusCode());
         }
     }
 }

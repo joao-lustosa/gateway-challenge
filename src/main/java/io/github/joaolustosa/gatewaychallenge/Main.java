@@ -59,22 +59,48 @@ public class Main {
 
         String cep = scanner.nextLine();
 
-        //Validate CEP
+        if (!isCepValid(cep)) {
+            System.out.println("Formato de CEP inválido. Por favor, tente novamente.");
+
+            return;
+        }
 
         Address addressInfo = DatabaseService.getAddressByCep(cep);
 
         if (addressInfo == null) {
             addressInfo = AddressService.fetchCepInfo(cep);
+            if (addressInfo != null) {
+                DatabaseService.addAddress(addressInfo);
+            }
         }
 
         if (addressInfo != null) {
+            System.out.println("------------------------------");
             System.out.println("CEP: " + addressInfo.getCep());
             System.out.println("Estado: " + addressInfo.getState());
             System.out.println("Cidade: " + addressInfo.getCity());
             System.out.println("Vizinhança: " + addressInfo.getNeighborhood());
             System.out.println("Rua: " + addressInfo.getStreet());
+            System.out.println("------------------------------");
         } else {
             System.out.println("Não foi possível buscar o CEP desejado.");
         }
+    }
+
+    private static boolean isCepValid(String cep) {
+        if (cep == null) {
+            return false;
+        }
+
+        cep = cep.replace("-", "");
+
+        if (cep.length() != 8) {
+            return false;
+        }
+
+        for (char c : cep.toCharArray()) {
+            if (!Character.isDigit(c)) return false;
+        }
+        return true;
     }
 }
